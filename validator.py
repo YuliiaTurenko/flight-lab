@@ -1,6 +1,5 @@
 """Row validation: airport list loading, single-row checks, record building."""
 
-import csv
 import math
 import re
 from datetime import datetime
@@ -26,7 +25,7 @@ AIRPORT_CODE_RE = re.compile(r"[A-Z]{3}")
 DATETIME_RE = re.compile(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}", re.ASCII)
 
 # Helpers
-def _clean_airport_line(line: str) -> str | None:
+def clean_airport_line(line: str) -> str | None:
     code = line.strip()
     if not code or code.startswith("#"):
         return None
@@ -68,10 +67,10 @@ def load_airports(path: str) -> set[str]:
     airports: set[str] = set()
     with open(path, encoding="utf-8-sig") as f:
         for line in f:
-            code = _clean_airport_line(line)
+            code = clean_airport_line(line)
             if code is not None:
                 airports.add(code)
-                
+
     return airports
 
 
