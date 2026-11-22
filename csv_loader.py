@@ -6,7 +6,6 @@ from validator import to_record, validate_row
 
 DUPLICATE_FLIGHT = "DUPLICATE_FLIGHT"
 
-# Helpers
 def is_skippable(line: str) -> bool:
     stripped = line.strip()
     return not stripped or stripped.startswith("#")

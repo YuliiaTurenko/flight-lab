@@ -4,7 +4,6 @@ import math
 import re
 from datetime import datetime
 
-# Error codes
 WRONG_FIELD_COUNT = "WRONG_FIELD_COUNT"
 MISSING_FIELD = "MISSING_FIELD"
 INVALID_FLIGHT_ID = "INVALID_FLIGHT_ID"
@@ -24,7 +23,6 @@ FLIGHT_ID_RE = re.compile(r"[A-Za-z0-9]{2,8}")
 AIRPORT_CODE_RE = re.compile(r"[A-Z]{3}")
 DATETIME_RE = re.compile(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}", re.ASCII)
 
-# Helpers
 def clean_airport_line(line: str) -> str | None:
     code = line.strip()
     if not code or code.startswith("#"):
@@ -52,12 +50,10 @@ def parse_price(value: str) -> float | None:
         return None
     return price if math.isfinite(price) else None
 
-
 def is_valid_airport(code: str, airports: set[str]) -> bool:
     return bool(AIRPORT_CODE_RE.fullmatch(code)) and code in airports
 
 
-# Required API
 def load_airports(path: str) -> set[str]:
     """Read an airport list file and return the set of codes.
 
