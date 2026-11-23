@@ -18,7 +18,6 @@ NON_POSITIVE_PRICE = "NON_POSITIVE_PRICE"
 
 EXPECTED_FIELDS = 6
 DATETIME_FORMAT = "%Y-%m-%d %H:%M"
-
 FLIGHT_ID_RE = re.compile(r"[A-Za-z0-9]{2,8}")
 AIRPORT_CODE_RE = re.compile(r"[A-Z]{3}")
 DATETIME_RE = re.compile(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}", re.ASCII)
@@ -33,13 +32,11 @@ def parse_datetime(value: str) -> datetime | None:
     if not isinstance(value, str):
         return None
 
-    pattern = r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$"
-
-    if not re.fullmatch(pattern, value):
+    if not re.fullmatch(DATETIME_RE, value):
         return None
     
     try:
-        return datetime.strptime(value, "%Y-%m-%d %H:%M")
+        return datetime.strptime(value, DATETIME_FORMAT)
     except ValueError:
         return None
 
@@ -48,6 +45,7 @@ def parse_price(value: str) -> float | None:
         price = float(value)
     except ValueError:
         return None
+    
     return price if math.isfinite(price) else None
 
 def is_valid_airport(code: str, airports: set[str]) -> bool:
